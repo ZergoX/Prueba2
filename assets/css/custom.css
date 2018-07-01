@@ -1,0 +1,18 @@
+.fondoMain
+{
+    min-height: 200px;
+    margin-top:100px;
+    margin-bottom: 100px;
+};
+
+.fondoRegistros
+{
+    margin-top: 200px;
+    background-color:whitesmoke;
+};
+
+body
+{
+    background: #E5EAEE;
+};
+
