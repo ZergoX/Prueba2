@@ -20,4 +20,9 @@ class empresa_model extends CI_Model {
         $this->db->where("RUT_EMPRESA",$rut);
         return $this->db->get('empresa')->result_array();
     }
+
+    public function All()
+    {
+        return $this->db->get('empresa')->result_array();
+    }
 }

@@ -128,7 +128,15 @@ class CRUD_EMPRESA extends CI_Controller {
 			$this->session->set_userdata("mensajes_Empresa",$mensaje);
 			$this->session->set_userdata("datosEmpresa",$mantenerDatosEmpresa);
 			redirect("/CRUD_EMPRESA","refresh");
-		}
-		
+		}	
+	}
+
+	public function ListEmpresa()
+	{
+		$this->load->model('EMPRESA_MODEL');
+
+		$data['listadoEmpresa'] = $this->EMPRESA_MODEL->All();
+
+		$this->load->view('ListadoEmpresa',$data);
 	}
 }

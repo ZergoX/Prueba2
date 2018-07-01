@@ -23,7 +23,7 @@
                     Inhabilitar usuarios
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Empresas</a>
+                    <a class="dropdown-item" href="<?= base_url()?>index.php/CRUD_EMPRESA/ListEmpresa">Empresas</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">Particulares</a>
                 </div>
