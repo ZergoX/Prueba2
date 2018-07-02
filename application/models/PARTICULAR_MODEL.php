@@ -37,4 +37,16 @@ class particular_model extends CI_Model {
         $this->db->where("RUT_PARTICULAR",$rut);
         return $this->db->get('particular')->result_array();
     }
+  
+    public function Deshabilitar_Habilitar($id,$particular)
+    {
+        $this->db->where("CODIGO_PARTICULAR",$id);
+        $this->db->update("particular",$particular);
+    }
+
+    public function GetById($id)
+    {
+        $this->db->where('CODIGO_PARTICULAR',$id);
+        return $this->db->get('PARTICULAR')->result_array();
+    }
 }

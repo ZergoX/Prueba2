@@ -129,4 +129,59 @@ class CRUD_PARTICULAR extends CI_Controller {
 			redirect("/CRUD_PARTICULAR","refresh");
 		}
 	}
+
+	public function ListParticular()
+	{
+		$this->load->model('PARTICULAR_MODEL');
+
+		$data['listado_Particulares'] = $this->PARTICULAR_MODEL->All();
+
+		$this->load->view('ListadoParticulares',$data);
+	}
+
+	public function deshabilitarParticular($id)
+	{
+		$this->load->model('PARTICULAR_MODEL');
+
+		$data['datos_particular'] = $this->PARTICULAR_MODEL->GetById($id);
+		$data['datos_particular'] = $data['datos_particular'][0];
+
+		$particular=
+		[
+			"CODIGO_PARTICULAR" => $data['datos_particular']['CODIGO_PARTICULAR'],
+			"RUT_PARTICULAR" => $data['datos_particular']['RUT_PARTICULAR'],
+			"NOMBRE_PARTICULAR" => $data['datos_particular']['NOMBRE_PARTICULAR'],
+			"PASSWORD_PARTICULAR" => $data['datos_particular']['PASSWORD_PARTICULAR'],
+			"DIRECCION_PARTICULAR" => $data['datos_particular']['DIRECCION_PARTICULAR'],
+			"ESTADO_PARTICULAR" => "DESHABILITADO",
+			"TIPO_USUARIO" => $data['datos_particular']['TIPO_USUARIO']
+		];
+
+		$this->PARTICULAR_MODEL->Deshabilitar_Habilitar($id,$particular);
+
+		redirect('/CRUD_PARTICULAR/ListParticular','refresh');
+	}
+
+	public function HabilitarParticular($id)
+	{
+		$this->load->model('PARTICULAR_MODEL');
+
+		$data['datos_particular'] = $this->PARTICULAR_MODEL->GetById($id);
+		$data['datos_particular'] = $data['datos_particular'][0];
+
+		$particular=
+		[
+			"CODIGO_PARTICULAR" => $data['datos_particular']['CODIGO_PARTICULAR'],
+			"RUT_PARTICULAR" => $data['datos_particular']['RUT_PARTICULAR'],
+			"NOMBRE_PARTICULAR" => $data['datos_particular']['NOMBRE_PARTICULAR'],
+			"PASSWORD_PARTICULAR" => $data['datos_particular']['PASSWORD_PARTICULAR'],
+			"DIRECCION_PARTICULAR" => $data['datos_particular']['DIRECCION_PARTICULAR'],
+			"ESTADO_PARTICULAR" => "ACTIVO",
+			"TIPO_USUARIO" => $data['datos_particular']['TIPO_USUARIO']
+		];
+
+		$this->PARTICULAR_MODEL->Deshabilitar_Habilitar($id,$particular);
+
+		redirect('/CRUD_PARTICULAR/ListParticular','refresh');
+	}
 }
