@@ -20,9 +20,21 @@ class empresa_model extends CI_Model {
         $this->db->where("RUT_EMPRESA",$rut);
         return $this->db->get('empresa')->result_array();
     }
+    
+    public function GetById($id)
+    {
+        $this->db->where('CODIGO_EMPRESA',$id);
+        return $this->db->get('empresa')->result_array();
+    }
 
     public function All()
     {
         return $this->db->get('empresa')->result_array();
+    }
+
+    public function Deshabilitar($id,$empresa)
+    {
+        $this->db->where("CODIGO_EMPRESA",$id);
+        $this->db->update("empresa",$empresa);
     }
 }

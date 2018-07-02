@@ -44,7 +44,7 @@
                 <th><?= $i['ESTADO_EMPRESA']?></th>
                 <th><?= $i['TIPO_USUARIO']?></th>
                 <th><a href="#"><input type="submit" value="Habilitar" class="btn btn-outline-danger"></a></th>
-                <th><a href="#"><input type="submit" value="Dehabilitar" class="btn btn-outline-info"></a></th>
+                <th><a href="<?= base_url() ."index.php/CRUD_EMPRESA/deshabilitarEmpresa/". $i['CODIGO_EMPRESA']?>"><input type="submit" value="Dehabilitar" class="btn btn-outline-info"></a></th>
             </tr>
             <?php } ?>
         </tbody>
