@@ -32,9 +32,10 @@ class empresa_model extends CI_Model {
         return $this->db->get('empresa')->result_array();
     }
 
-    public function Deshabilitar($id,$empresa)
+    public function Deshabilitar_Habilitar($id,$empresa)
     {
         $this->db->where("CODIGO_EMPRESA",$id);
         $this->db->update("empresa",$empresa);
     }
+    
 }

@@ -158,7 +158,30 @@ class CRUD_EMPRESA extends CI_Controller {
 			"TIPO_USUARIO" => $data['datos_empresa']['TIPO_USUARIO']
 		];
 
-		$this->EMPRESA_MODEL->Deshabilitar($id,$empresa);
+		$this->EMPRESA_MODEL->Deshabilitar_Habilitar($id,$empresa);
+
+		redirect('/CRUD_EMPRESA/ListEmpresa','refresh');
+	}
+
+	public function HabilitarEmpresa($id)
+	{
+		$this->load->model('EMPRESA_MODEL');
+
+		$data['datos_empresa'] = $this->EMPRESA_MODEL->GetById($id);
+		$data['datos_empresa'] = $data['datos_empresa'][0];
+
+		$empresa=
+		[
+			"CODIGO_EMPRESA" => $data['datos_empresa']['CODIGO_EMPRESA'],
+			"RUT_EMPRESA" => $data['datos_empresa']['RUT_EMPRESA'],
+			"NOMBRE_EMPRESA" => $data['datos_empresa']['NOMBRE_EMPRESA'],
+			"PASSWORD_EMPRESA" => $data['datos_empresa']['PASSWORD_EMPRESA'],
+			"DIRECCION_EMPRESA" => $data['datos_empresa']['DIRECCION_EMPRESA'],
+			"ESTADO_EMPRESA" => "ACTIVO",
+			"TIPO_USUARIO" => $data['datos_empresa']['TIPO_USUARIO']
+		];
+
+		$this->EMPRESA_MODEL->Deshabilitar_Habilitar($id,$empresa);
 
 		redirect('/CRUD_EMPRESA/ListEmpresa','refresh');
 	}
