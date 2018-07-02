@@ -30,7 +30,6 @@
                 <th scope="col">RUT</th>
                 <th scope="col">NOMBRE</th>
                 <th scope="col">ESTADO</th>
-                <th scope="col">TIPO</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
             </tr>
@@ -42,7 +41,6 @@
                 <th><?= $i['RUT_PARTICULAR']?></th>
                 <th><?= $i['NOMBRE_PARTICULAR']?></th>
                 <th><?= $i['ESTADO_PARTICULAR']?></th>
-                <th><?= $i['TIPO_USUARIO']?></th>
                 <th><a href="<?= base_url() ."index.php/CRUD_PARTICULAR/HabilitarParticular/". $i['CODIGO_PARTICULAR']?>"><input type="submit" value="Habilitar" class="btn btn-outline-danger"></a></th>
                 <th><a href="<?= base_url() ."index.php/CRUD_PARTICULAR/deshabilitarParticular/". $i['CODIGO_PARTICULAR']?>"><input type="submit" value="Dehabilitar" class="btn btn-outline-info"></a></th>
             </tr>

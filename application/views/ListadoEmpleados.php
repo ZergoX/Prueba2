@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Listado de Empresa</title>
+    <title>Listado de Empleados</title>
     <style>
         .fondoAnalisis
         {
@@ -23,26 +23,27 @@
 <?php require("HeaderAdmin.php")?><br/>
 
 <div class="container table-responsive fondoAnalisis"><br/>
-    <table class="table table-striped table-bordered" border="1" id="listadoAnalisis">
+    <table class="table table-striped table-bordered" border="1" id="listadoEmpleados">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">ID</th>
                 <th scope="col">RUT</th>
                 <th scope="col">NOMBRE</th>
-                <th scope="col">ESTADO</th>                
+                <th scope="col">ESTADO</th>
+                <th scope="col">Rol</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($listadoEmpresa as $key => $i) { ?>
+            <?php foreach ($listado_empleados as $key => $i) { 
+                $tipo = ($i['ROL']== 'A') ? "Administrador" : (($i['ROL']=='T') ? "Tecnico en Laboratorio" : "Receptor de Muestras");?>
             <tr>
-                <th><?= $i['CODIGO_EMPRESA']?></th>
-                <th><?= $i['RUT_EMPRESA']?></th>
-                <th><?= $i['NOMBRE_EMPRESA']?></th>
-                <th><?= $i['ESTADO_EMPRESA']?></th>
-                <th><a href="<?= base_url() ."index.php/CRUD_EMPRESA/HabilitarEmpresa/". $i['CODIGO_EMPRESA']?>"><input type="submit" value="Habilitar" class="btn btn-outline-danger"></a></th>
-                <th><a href="<?= base_url() ."index.php/CRUD_EMPRESA/deshabilitarEmpresa/". $i['CODIGO_EMPRESA']?>"><input type="submit" value="Dehabilitar" class="btn btn-outline-info"></a></th>
+                <th><?= $i['RUT_EMPLEADO']?></th>
+                <th><?= $i['NOMBRE_EMPLEADO'] ." ". $i['APELLIDO_PATERNO_EMPLEADO'] ." ". $i['APELLIDO_MATERNO_EMPLEADO']?></th>
+                <th><?= $i['ESTADO_EMPLEADO']?></th>
+                <th><?= $tipo ?></th>
+                <th><a href="<?= base_url() ."index.php/CRUD_EMPLEADO/HabilitarEmpleado/". $i['RUT_EMPLEADO'] ?>"><input type="submit" value="Habilitar" class="btn btn-outline-danger"></a></th>
+                <th><a href="<?= base_url() ."index.php/CRUD_EMPLEADO/DeshabilitarEmpleado/". $i['RUT_EMPLEADO' ]?>"><input type="submit" value="Dehabilitar" class="btn btn-outline-info"></a></th>
             </tr>
             <?php } ?>
         </tbody>
@@ -53,7 +54,7 @@
 
     <script>
         $(document).ready(function() {
-            $('#listadoAnalisis').DataTable
+            $('#listadoEmpleados').DataTable
             ({
                 responsive: true,
 

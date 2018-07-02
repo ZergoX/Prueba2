@@ -13,7 +13,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Agregar Trabajadores <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="<?= base_url()?>index.php/CRUD_EMPLEADO">Agregar Trabajadores <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Generar reportes</a>
@@ -26,6 +26,8 @@
                     <a class="dropdown-item" href="<?= base_url()?>index.php/CRUD_EMPRESA/ListEmpresa">Empresas</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="<?= base_url()?>index.php/CRUD_PARTICULAR/ListParticular">Particulares</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="<?= base_url()?>index.php/CRUD_EMPLEADO/ListEmpleados">Empleados</a>
                 </div>
             </li>
             <li class="nav-item dropdown">

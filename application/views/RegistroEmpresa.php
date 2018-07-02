@@ -79,7 +79,6 @@
                         </div>
                     </div><br/>
                 </form>                
-
                 <?php if($this->session->mensajes_Empresa != null){ ?>
                     <div class="alert alert-danger" role="alert">
                         <ul class="navbar-nav">
