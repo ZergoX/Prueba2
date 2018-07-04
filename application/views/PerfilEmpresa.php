@@ -31,36 +31,28 @@
                 </div>
                 <div class="form-row">        
                     <label for="rut">RUT</label>
-                    <input type="text" name="rut" id="rut" value="<?= $Perfil_particular['RUT_PARTICULAR']?>" class="form-control" required="true" minlength="9" maxlength="9" disabled>
+                    <input type="text" name="rut" id="rut" value="<?= $CarpturarEmpresa['RUT_EMPRESA'] ?>" class="form-control" required="true" minlength="9" maxlength="9" disabled>
                 </div>
                 <div class="form-row">
                     <label for="nombre">NOMBRE</label>
-                    <input type="text" name="nombre" id="nombre" value="<?= $Perfil_particular['NOMBRE_PARTICULAR']?>" class="form-control" required="true" minlength="1" maxlength="50" disabled>
+                    <input type="text" name="nombre" id="nombre" value="<?= $CarpturarEmpresa['NOMBRE_EMPRESA']?>" class="form-control" required="true" minlength="1" maxlength="50" disabled>
                 </div>                                    
                 <div class="form-row">
                     <label for="direccion">DIRECCIÓN</label>
-                    <input type="text" name="direccion" id="direccion" value="<?= $Perfil_particular['DIRECCION_PARTICULAR']?>" class="form-control" required="true" minlength="1" maxlength="50" disabled>
-                </div>
-                <div class="form-row">
-                    <label for="correo">CORREO ELECTRONICO</label>
-                    <input type="email" name="correo" id="correo" value="<?= $Perfil_particular['EMAIL_PARTICULAR']?>" class="form-control" required="true" minlength="1" maxlength="50" disabled>                
-                </div>
-                <div class="form-row">
-                    <label for="numeroMain">Numero telefónico</label>
-                    <input type="text" name="numeroMain" id="numeroMain" value="<?= $Perfil_particular['NUMERO_TELEFONO']?>" class="form-control" required="true" minlength="1" maxlength="50" disabled>    
-                </div><br/>
+                    <input type="text" name="direccion" id="direccion" value="<?= $CarpturarEmpresa['DIRECCION_EMPRESA']?>" class="form-control" required="true" minlength="1" maxlength="50" disabled>
+                </div><br/>                
                 <div class="form-row">                        
                     <div class="col-md-6">
-                        <a href="<?= base_url()."index.php/CRUD_PARTICULAR/LoadUpdateParticular/".$Perfil_particular['PARTICULAR_CODIGO_PARTICULAR']?>"><input type="submit" value="Editar" class="form-control btn btn-danger"></a>
+                        <a href="<?= base_url() ."index.php/CRUD_EMPRESA/LoadEmpresaUpdate/". $CarpturarEmpresa['CODIGO_EMPRESA']?>"><input type="submit" value="Editar" class="form-control btn btn-danger"></a>
                     </div>
                     <div class="col-md-6">
-                        <a href="<?= base_url()."index.php/CRUD_PARTICULAR/deshabilitarCuenta/".$Perfil_particular['PARTICULAR_CODIGO_PARTICULAR']?>"><input type="submit" value="Inhabilitar mi cuenta" class="form-control btn btn-info"></a>
+                        <a href="<?= base_url() ."index.php/CRUD_EMPRESA/deshabilitarCuenta/". $CarpturarEmpresa['CODIGO_EMPRESA']?>"><input type="submit" value="Inhabilitar mi cuenta" class="form-control btn btn-info"></a>
                     </div>
                 </div><br/>
                 <div class="form-row">
                     <h5><label for=""><strong> Cambiar </strong>Contraseña </label></h5>
                 </div>
-                <form action="<?= base_url()?>index.php/CRUD_PARTICULAR/CambiarPass" method="post">
+                <form action="<?= base_url()?>index.php/CRUD_EMPRESA/CambiarPass" method="post">
                     <div class="form-row">
                         <label for="oldpass">Ingrese su contaseña</label>
                         <input type="password" name="oldpass" id="oldpass" class="form-control" required="true" minlength="1" maxlength="50">

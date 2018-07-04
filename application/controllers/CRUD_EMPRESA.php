@@ -185,4 +185,144 @@ class CRUD_EMPRESA extends CI_Controller {
 
 		redirect('/CRUD_EMPRESA/ListEmpresa','refresh');
 	}
+
+	public function LoadDatos()
+	{
+		$this->load->model('EMPRESA_MODEL');
+		
+		$data['CarpturarEmpresa'] = $this->EMPRESA_MODEL->GetRut($this->session->rut);
+		$data['CarpturarEmpresa'] = $data['CarpturarEmpresa'][0];
+		$this->load->view('PerfilEmpresa',$data);
+	}
+
+	public function LoadEmpresaUpdate($rut)
+	{
+		$this->load->model('EMPRESA_MODEL');
+
+		$data['CarpturarEmpresa'] =$this->EMPRESA_MODEL->GetRut($this->session->rut);
+		$data['CarpturarEmpresa'] = $data['CarpturarEmpresa'][0];
+		$this->load->view('UpdateEmpresa',$data);
+	}
+
+	public function UpdateEmpresa($codigo)
+	{
+		$this->load->model('EMPRESA_MODEL');
+
+		$this->load->library('VALIDATE_FORM_EMPRESA');
+
+		$nombre = $this->input->post('nombre');
+		$direccion = $this->input->post('direccion');
+
+		$nombre1 = trim($nombre);
+		$direccion1 = trim($direccion);
+		
+		$error1 =$this->validate_form_empresa->ValidateLargeNombre($nombre1);
+		$error2 =$this->validate_form_empresa->ValidateLargeDireccion($direccion1);
+
+		$mensaje = ['1'=>$error1,'2'=>$error2];
+
+		$rut = $this->EMPRESA_MODEL->GetById($codigo);
+		$rut=$rut[0];
+		
+		if(empty($mensaje['1']) && empty($mensaje['2']))
+		{
+			$empresa=
+			[
+				"NOMBRE_EMPRESA" => $nombre1,
+				"DIRECCION_EMPRESA" => $direccion1
+			];
+
+			$this->EMPRESA_MODEL->Update($codigo,$empresa);
+			
+			redirect('/CRUD_EMPRESA/LoadDatos','refresh');
+		}else 
+		{			
+			redirect('/CRUD_EMPRESA/LoadEmpresaUpdate/'. $rut['CODIGO_EMPRESA'],'refresh');
+		}
+	}
+
+	public function deshabilitarCuenta($id)
+	{
+		$this->load->model('EMPRESA_MODEL');
+
+		$data['datos_particular'] = $this->EMPRESA_MODEL->GetById($id);
+		$data['datos_particular'] = $data['datos_particular'][0];
+		$mensaje="";
+
+		$empresa=
+		[
+			"CODIGO_EMPRESA" => $data['datos_particular']['CODIGO_EMPRESA'],
+			"RUT_EMPRESA" => $data['datos_particular']['RUT_EMPRESA'],
+			"NOMBRE_EMPRESA" => $data['datos_particular']['NOMBRE_EMPRESA'],
+			"PASSWORD_EMPRESA" => $data['datos_particular']['PASSWORD_EMPRESA'],
+			"DIRECCION_EMPRESA" => $data['datos_particular']['DIRECCION_EMPRESA'],
+			"ESTADO_EMPRESA" => "DESHABILITADO",
+			"TIPO_USUARIO" => $data['datos_particular']['TIPO_USUARIO']
+		];
+
+		$dato=$this->EMPRESA_MODEL->Deshabilitar_Habilitar($id,$empresa);
+		redirect('/Welcome/Logout','refresh');
+	}
+
+	public function CambiarPass()
+	{
+		$this->load->model('EMPRESA_MODEL');
+
+		$this->load->library('VALIDATE_LOGIN');
+
+		$oldPass = hash('sha256',$this->input->post('oldpass'));
+		$newPass = hash('sha256',$this->input->post('newPass'));
+		$repeatPass = hash('sha256',$this->input->post('repeatNewPass'));
+
+		$oldPass1 = trim($oldPass);
+		$newPass1 = trim($newPass);
+		$repeatPass1 = trim($repeatPass);
+
+		$error1=$this->validate_login->ValidateLargepass($oldPass1);
+		$error2=$this->validate_login->ValidateLargepass($newPass1);
+		$error3=$this->validate_login->ValidateLargepass($repeatPass1);
+
+		$mensaje=['1' => $error1,'2'=>$error2,'3'=>$error3];
+
+		if(empty($mensaje['1']) && empty($error2['1']) && empty($error3['3']))
+		{
+			$passOld= $this->EMPRESA_MODEL->GetRut($this->session->rut);
+			$passOld = $passOld[0];
+
+			if($passOld['PASSWORD_EMPRESA'] == $oldPass1)
+			{
+				if($newPass1 == $repeatPass1)
+				{
+					$cambiarPass=
+					[
+						"PASSWORD_EMPRESA"=> $repeatPass1
+					];
+
+					$exito =$this->EMPRESA_MODEL->Update($passOld['CODIGO_EMPRESA'],$cambiarPass);
+
+					if($exito)
+					{
+						$mensaje="Contraseña cambiada correctamente";
+					}
+
+					$this->session->set_userdata('mensaje_pass',$mensaje);
+					redirect('/CRUD_EMPRESA/LoadDatos','refresh');
+				}else 
+				{
+					$mensaje="la nueva contraseña no coinciden";
+					$this->session->set_userdata('mensaje_pass',$mensaje);
+					redirect('/CRUD_EMPRESA/LoadDatos','refresh');
+				}
+			}else 
+			{
+				$mensaje ="La contraseña actual ingresada no es correcta";
+				$this->session->set_userdata('mensaje_pass',$mensaje);
+				redirect('/CRUD_EMPRESA/LoadDatos','refresh');
+			}
+		}else 
+		{
+			$this->session->set_userdata('mensaje_pass',$mensaje);
+			redirect('/CRUD_EMPRESA/LoadDatos','refresh');
+		}
+	}
 }
