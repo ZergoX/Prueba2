@@ -21,7 +21,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="post">
+                    <form action="<?= base_url()?>index.php/Welcome/Login" method="post">
                         <div class="form-row">
                             <label for="rut">Rut</label>
                             <input type="text" name="rut" id="rut" class="form-control" required="true" placeholder="sin puntos ni guion">
@@ -29,11 +29,13 @@
                         <div class="form-row">
                             <label for="">Contraseña</label>
                             <input type="password" name="pass" id="pass" class="form-control" required="true" placeholder="contraseña ...">
+                        </div><br/>
+                        <div class="form-row">
+                            <input type="submit" value="Ingresar" class="form-control btn btn-outline-danger">
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-danger">Ingresar</button>
                     <a href="<?= base_url()?>/index.php/CRUD_EMPRESA"><button type="button" class="btn btn-outline-secondary">Cuenta Empresa</button></a>
                     <a href="<?= base_url()?>/index.php/CRUD_PARTICULAR"><button type="button" class="btn btn-outline-secondary">Cuenta Cliente</button></a>
                 </div>

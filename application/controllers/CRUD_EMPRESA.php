@@ -83,7 +83,7 @@ class CRUD_EMPRESA extends CI_Controller {
 						"PASSWORD_EMPRESA" => $pass22,
 						"DIRECCION_EMPRESA" => $direccion1,
 						"ESTADO_EMPRESA" => "ACTIVO",
-						"TIPO_USUARIO" => "CLIENTE"
+						"TIPO_USUARIO" => "CLIENTE_EMPRESA"
 					];
 					$lastEmpresa=$this->EMPRESA_MODEL->Add($empresa);
 

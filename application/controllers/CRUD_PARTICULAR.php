@@ -76,7 +76,7 @@ class CRUD_PARTICULAR extends CI_Controller {
 						"DIRECCION_PARTICULAR" => $direccion2,
 						"EMAIL_PARTICULAR" => $correo2,
 						"ESTADO_PARTICULAR"=> "ACTIVO",
-						"TIPO_USUARIO" => "CLIENTE"
+						"TIPO_USUARIO" => "CLIENTE_PARTICULAR"
 					];
 					$lastPartiular =$this->PARTICULAR_MODEL->Add($particular);
 					
@@ -183,5 +183,163 @@ class CRUD_PARTICULAR extends CI_Controller {
 		$this->PARTICULAR_MODEL->Deshabilitar_Habilitar($id,$particular);
 
 		redirect('/CRUD_PARTICULAR/ListParticular','refresh');
+	}
+
+	public function loadPerfilParticular()
+	{
+		$this->load->model('PARTICULAR_MODEL');
+		
+		$codigoUsuario = $this->PARTICULAR_MODEL->GetRut($this->session->rut);
+		$codigoUsuario = $codigoUsuario[0];
+
+		$data['Perfil_particular'] = $this->PARTICULAR_MODEL->GetAllPhone($codigoUsuario['CODIGO_PARTICULAR']);
+		$data['Perfil_particular'] = $data['Perfil_particular'][0];
+		$this->load->view('PerfilParticular',$data);
+	}
+
+	public function LoadUpdateParticular($codigo)
+	{
+		$this->load->model('PARTICULAR_MODEL');
+		$this->load->model('TELEFONO_MODEL');
+
+		$datos['cargarDatos'] = $this->PARTICULAR_MODEL->GetAllPhone($codigo);
+		$datos['cargarNumeros'] = $this->TELEFONO_MODEL->AllById($codigo);
+
+		$datos['cargarDatos'] = $datos['cargarDatos'][0];
+
+		$this->load->view('UpdateParticulas',$datos);
+	}
+
+	public function EditParticular($codigo)
+	{
+		$this->load->model('PARTICULAR_MODEL');
+		$this->load->model('TELEFONO_MODEL');
+
+		$this->load->library('VALIDATE_FORM_PARTICULAR');
+
+		$nombre = $this->input->post('nombre');
+		$direccion = $this->input->post('direccion');
+		$correo = $this->input->post('correo');
+		$telefono = $this->input->post('telefono');
+
+		$nombre1 = trim($nombre);
+		$direccion1 = trim($direccion);
+		$correo1 = trim($correo);
+		$telefono1 = trim($telefono);
+
+		$error1 = $this->validate_form_particular->ValidateLargeNombre($nombre1,2,50);
+		$error2 = $this->validate_form_particular->ValidateLargeDireccion($direccion1,2,50);
+		$error3 = $this->validate_form_particular->ValidateLargeTelefono($telefono1);
+
+		$mensaje =['1' => $error1, '2' => $error2, '3'=>$error3];
+
+		if(empty($mensaje['1']) && empty($mensaje['2']) && empty($mensaje['3']))
+		{
+			$particular=
+			[
+				"NOMBRE_PARTICULAR" => $nombre1,
+				"DIRECCION_PARTICULAR" => $direccion1,
+				"EMAIL_PARTICULAR" => $correo1
+			];
+
+			$telef=
+			[
+				"NUMERO_TELEFONO"=> $telefono1,
+				"PARTICULAR_CODIGO_PARTICULAR" => $codigo
+			];
+
+			$this->TELEFONO_MODEL->Update($codigo,$telef);
+			$this->PARTICULAR_MODEL->Update($codigo,$particular);
+			redirect('/CRUD_PARTICULAR/loadPerfilParticular','refresh');
+		}else 
+		{
+			$this->session->set_userdata('mensaje_error_update_particular',$mensaje);
+			redirect('/CRUD_PARTICULAR/LoadUpdateParticular/'.$codigo,'refresh');
+		}
+	}
+
+	public function deshabilitarCuenta($id)
+	{
+		$this->load->model('PARTICULAR_MODEL');
+
+		$data['datos_particular'] = $this->PARTICULAR_MODEL->GetById($id);
+		$data['datos_particular'] = $data['datos_particular'][0];
+		$mensaje="";
+
+		$particular=
+		[
+			"CODIGO_PARTICULAR" => $data['datos_particular']['CODIGO_PARTICULAR'],
+			"RUT_PARTICULAR" => $data['datos_particular']['RUT_PARTICULAR'],
+			"NOMBRE_PARTICULAR" => $data['datos_particular']['NOMBRE_PARTICULAR'],
+			"PASSWORD_PARTICULAR" => $data['datos_particular']['PASSWORD_PARTICULAR'],
+			"DIRECCION_PARTICULAR" => $data['datos_particular']['DIRECCION_PARTICULAR'],
+			"ESTADO_PARTICULAR" => "DESHABILITADO",
+			"TIPO_USUARIO" => $data['datos_particular']['TIPO_USUARIO']
+		];
+
+		$dato=$this->PARTICULAR_MODEL->Deshabilitar_Habilitar($id,$particular);
+		redirect('/Welcome/Logout','refresh');
+	}
+
+	public function CambiarPass()
+	{
+		$this->load->model('PARTICULAR_MODEL');
+
+		$this->load->library('VALIDATE_LOGIN');
+
+		$oldPass = hash('sha256',$this->input->post('oldpass'));
+		$newPass = hash('sha256',$this->input->post('newPass'));
+		$repeatPass = hash('sha256',$this->input->post('repeatNewPass'));
+
+		$oldPass1 = trim($oldPass);
+		$newPass1 = trim($newPass);
+		$repeatPass1 = trim($repeatPass);
+
+		$error1=$this->validate_login->ValidateLargepass($oldPass1);
+		$error2=$this->validate_login->ValidateLargepass($newPass1);
+		$error3=$this->validate_login->ValidateLargepass($repeatPass1);
+
+		$mensaje=['1' => $error1,'2'=>$error2,'3'=>$error3];
+
+		if(empty($mensaje['1']) && empty($error2['1']) && empty($error3['3']))
+		{
+			$passOld= $this->PARTICULAR_MODEL->GetRut($this->session->rut);
+			$passOld = $passOld[0];
+
+			if($passOld['PASSWORD_PARTICULAR'] == $oldPass1)
+			{
+				if($newPass1 == $repeatPass1)
+				{
+					$cambiarPass=
+					[
+						"PASSWORD_PARTICULAR"=> $repeatPass1
+					];
+
+					$exito =$this->PARTICULAR_MODEL->Update($passOld['CODIGO_PARTICULAR'],$cambiarPass);
+
+					if($exito)
+					{
+						$mensaje="Contraseña cambiada correctamente";
+					}
+
+					$this->session->set_userdata('mensaje_pass',$mensaje);
+					redirect('/CRUD_PARTICULAR/loadPerfilParticular','refresh');
+				}else 
+				{
+					$mensaje="la nueva contraseña no coinciden";
+					$this->session->set_userdata('mensaje_pass',$mensaje);
+					redirect('/CRUD_PARTICULAR/loadPerfilParticular','refresh');
+				}
+			}else 
+			{
+				$mensaje ="La contraseña actual ingresada no es correcta";
+				$this->session->set_userdata('mensaje_pass',$mensaje);
+				redirect('/CRUD_PARTICULAR/loadPerfilParticular','refresh');
+			}
+		}else 
+		{
+			$this->session->set_userdata('mensaje_pass',$mensaje);
+			redirect('/CRUD_PARTICULAR/loadPerfilParticular','refresh');
+		}
 	}
 }
