@@ -38,4 +38,23 @@ class empresa_model extends CI_Model {
         $this->db->update("empresa",$empresa);
     }
     
+    public function GetRutAndPass($rut,$pass)
+    {
+        $this->db->where('RUT_EMPRESA',$rut);
+        $this->db->where('PASSWORD_EMPRESA',$pass);
+        return $this->db->get('empresa')->result_array();
+    }
+
+    public function GetStatusAccount($rut,$estado)
+    {
+        $this->db->where('ESTADO_EMPRESA',$estado);
+        $this->db->where('RUT_EMPRESA',$rut);
+        return $this->db->get('empresa')->result_array();
+    }
+
+    public function Update($codigo,$empresa)
+    {
+        $this->db->where('CODIGO_EMPRESA',$codigo);
+        return $this->db->update("empresa",$empresa);
+    }
 }

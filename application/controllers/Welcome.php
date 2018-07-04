@@ -65,6 +65,7 @@ class Welcome extends CI_Controller {
 		if(empty($mensaje['1']) && empty($error2['2']) && empty($mensaje['3']))
 		{	
 			$loginParticular = $this->PARTICULAR_MODEL->GetRutAndPass($rut1,$pass1);
+			$loginEmpresa = $this->EMPRESA_MODEL->GetRutAndPass($rut1,$pass1);
 
 			if(count($loginParticular) != 0)
 			{
@@ -77,6 +78,23 @@ class Welcome extends CI_Controller {
 					$this->session->set_userdata('rut',$rut1);
 					$this->session->set_userdata('usuario',$NombreUsuario);
 					redirect('/Welcome/AccessUsers','refresh');
+				}else 
+				{
+					$mensaje="Su cuenta se encuentra deshabilitada";
+					$this->session->set_userdata('MensajeErrorLogin',$mensaje);
+					redirect('/Welcome','refresh');		
+				}
+			}else if(count($loginEmpresa) != 0)
+			{
+				$estaHabilidatoEmpresa = $this->EMPRESA_MODEL->GetStatusAccount($rut1,'ACTIVO');
+
+				if(count($estaHabilidatoEmpresa) !=0)
+				{
+					$rr = $estaHabilidatoEmpresa[0];
+					$NombreUsuario = $rr['NOMBRE_EMPRESA'];
+					$this->session->set_userdata('rut',$rut1);
+					$this->session->set_userdata('usuario',$NombreUsuario);
+					redirect('/Welcome/AccessUsersEmpresa','refresh');
 				}else 
 				{
 					$mensaje="Su cuenta se encuentra deshabilitada";
