@@ -42,7 +42,8 @@
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
-            <a href="">Nombre del administrador</a>
+            <strong><label for="">Bienvenido: </label></strong> &nbsp;<?= $this->session->usuario?>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="<?= base_url()?>index.php/Welcome/Logout" class="navbar-brand"><i class="fas fa-sign-out-alt fa-2x"></i></a>
         </form>
     </div>
     <div class="modal fade" id="ModalAgregarAnalisis" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

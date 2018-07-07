@@ -19,7 +19,8 @@
     </style>
 </head>
 <body class="body">
-    <?php require('HeaderUsers.php');?>
+    <?php require('HeaderUsers.php');
+    $formato = substr($Perfil_particular['RUT_PARTICULAR'],0,2).".".substr($Perfil_particular['RUT_PARTICULAR'],2,3).".".substr($Perfil_particular['RUT_PARTICULAR'],5,3)."-".substr($Perfil_particular['RUT_PARTICULAR'],8,9);?>
 
     <div class="container fondoRegistros"><br/>
         <div class="form-row">
@@ -31,7 +32,7 @@
                 </div>
                 <div class="form-row">        
                     <label for="rut">RUT</label>
-                    <input type="text" name="rut" id="rut" value="<?= $Perfil_particular['RUT_PARTICULAR']?>" class="form-control" required="true" minlength="9" maxlength="9" disabled>
+                    <input type="text" name="rut" id="rut" value="<?= $formato?>" class="form-control" required="true" minlength="9" maxlength="9" disabled>
                 </div>
                 <div class="form-row">
                     <label for="nombre">NOMBRE</label>

@@ -35,10 +35,11 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($listado_Particulares as $key => $i) { ?>
+            <?php foreach ($listado_Particulares as $key => $i) {
+                $formato = substr($i['RUT_PARTICULAR'],0,2).".".substr($i['RUT_PARTICULAR'],2,3).".".substr($i['RUT_PARTICULAR'],5,3)."-".substr($i['RUT_PARTICULAR'],8,9); ?>
             <tr>
                 <th><?= $i['CODIGO_PARTICULAR']?></th>
-                <th><?= $i['RUT_PARTICULAR']?></th>
+                <th><?= $formato?></th>
                 <th><?= $i['NOMBRE_PARTICULAR']?></th>
                 <th><?= $i['ESTADO_PARTICULAR']?></th>
                 <th><a href="<?= base_url() ."index.php/CRUD_PARTICULAR/HabilitarParticular/". $i['CODIGO_PARTICULAR']?>"><input type="submit" value="Habilitar" class="btn btn-outline-danger"></a></th>

@@ -35,10 +35,11 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($listadoEmpresa as $key => $i) { ?>
+            <?php foreach ($listadoEmpresa as $key => $i) {
+                $formato = substr($i['RUT_EMPRESA'],0,2).".".substr($i['RUT_EMPRESA'],2,3).".".substr($i['RUT_EMPRESA'],5,3)."-".substr($i['RUT_EMPRESA'],8,9);?>
             <tr>
                 <th><?= $i['CODIGO_EMPRESA']?></th>
-                <th><?= $i['RUT_EMPRESA']?></th>
+                <th><?= $formato?></th>
                 <th><?= $i['NOMBRE_EMPRESA']?></th>
                 <th><?= $i['ESTADO_EMPRESA']?></th>
                 <th><a href="<?= base_url() ."index.php/CRUD_EMPRESA/HabilitarEmpresa/". $i['CODIGO_EMPRESA']?>"><input type="submit" value="Habilitar" class="btn btn-outline-danger"></a></th>

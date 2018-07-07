@@ -30,6 +30,12 @@ class Welcome extends CI_Controller {
 		$this->load->view('Main');	
 	}
 
+	public function AccessReceptorMuetras()
+	{
+		$this->load->view('HeaderReceptorMuestras');
+		$this->load->view('Main');	
+	}
+
 	public function AccessUsers()
 	{
 		$this->load->view('HeaderUsers');
@@ -66,7 +72,8 @@ class Welcome extends CI_Controller {
 		{	
 			$loginParticular = $this->PARTICULAR_MODEL->GetRutAndPass($rut1,$pass1);
 			$loginEmpresa = $this->EMPRESA_MODEL->GetRutAndPass($rut1,$pass1);
-
+			$loginEmpleado = $this->EMPLEADO_MODEL->GetRutAndPass($rut1,$pass1);
+			
 			if(count($loginParticular) != 0)
 			{
 				$estaHabilidato = $this->PARTICULAR_MODEL->GetStatusAccount($rut1,'ACTIVO');
@@ -101,6 +108,50 @@ class Welcome extends CI_Controller {
 					$this->session->set_userdata('MensajeErrorLogin',$mensaje);
 					redirect('/Welcome','refresh');		
 				}
+			}else if(count($loginEmpleado) !=0)
+			{
+				$tipoEmpleado = $this->EMPLEADO_MODEL->TypeRol($rut,'A');
+				$tipoEmpleadoReceptor = $this->EMPLEADO_MODEL->TypeRol($rut,'R');
+				$estaHabilidatoEmpleado = $this->EMPLEADO_MODEL->GetStatusAccount($rut1,'ACTIVO');
+				
+				if(count($tipoEmpleado) !=0)
+				{
+					if(count($estaHabilidatoEmpleado) != 0)
+					{
+						$rr = $estaHabilidatoEmpleado[0];
+						$NombreUsuario = $rr['NOMBRE_EMPLEADO'] . " " .$rr['APELLIDO_PATERNO_EMPLEADO']. " ". $rr['APELLIDO_MATERNO_EMPLEADO'];
+						$this->session->set_userdata('rut',$rut1);
+						$this->session->set_userdata('usuario',$NombreUsuario);
+						redirect('/Welcome/AccessAdmin','refresh');
+					}else 
+					{
+						$mensaje="Su cuenta se encuentra deshabilitada";
+						$this->session->set_userdata('MensajeErrorLogin',$mensaje);
+						
+						redirect('/Welcome','refresh');		
+					}
+				}else if(count($tipoEmpleadoReceptor) !=0)
+				{
+					if(count($estaHabilidatoEmpleado) != 0)
+					{
+						$rr = $estaHabilidatoEmpleado[0];
+						$NombreUsuario = $rr['NOMBRE_EMPLEADO'] . " " .$rr['APELLIDO_PATERNO_EMPLEADO']. " ". $rr['APELLIDO_MATERNO_EMPLEADO'];
+						$this->session->set_userdata('rut',$rut1);
+						$this->session->set_userdata('usuario',$NombreUsuario);
+						redirect('/Welcome/AccessReceptorMuetras','refresh');
+					}else 
+					{
+						$mensaje="Su cuenta se encuentra deshabilitada";
+						$this->session->set_userdata('MensajeErrorLogin',$mensaje);
+						
+						redirect('/Welcome','refresh');		
+					}
+				}else 
+				{
+					$mensaje ="Usuario desconocido";
+					$this->session->set_userdata('MensajeErrorLogin',$mensaje);
+					redirect('/Welcome','refresh');						
+				}
 			}else 
 			{
 				$mensaje ="Credenciales incorrectas";
@@ -111,7 +162,7 @@ class Welcome extends CI_Controller {
 		{
 			$this->session->set_userdata('MensajeErrorLogin',$mensaje);
 			redirect('/Welcome','refresh');
-		}	
+		}
 	}
 
 	public function Logout()

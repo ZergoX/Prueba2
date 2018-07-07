@@ -36,9 +36,10 @@
         </thead>
         <tbody>
             <?php foreach ($listado_empleados as $key => $i) { 
+                $formato = substr($i['RUT_EMPLEADO'],0,2).".".substr($i['RUT_EMPLEADO'],2,3).".".substr($i['RUT_EMPLEADO'],5,3)."-".substr($i['RUT_EMPLEADO'],8,9);
                 $tipo = ($i['ROL']== 'A') ? "Administrador" : (($i['ROL']=='T') ? "Tecnico en Laboratorio" : "Receptor de Muestras");?>
             <tr>
-                <th><?= $i['RUT_EMPLEADO']?></th>
+                <th><?= $formato?></th>
                 <th><?= $i['NOMBRE_EMPLEADO'] ." ". $i['APELLIDO_PATERNO_EMPLEADO'] ." ". $i['APELLIDO_MATERNO_EMPLEADO']?></th>
                 <th><?= $i['ESTADO_EMPLEADO']?></th>
                 <th><?= $tipo ?></th>

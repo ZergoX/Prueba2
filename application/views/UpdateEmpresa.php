@@ -19,7 +19,9 @@
     </style>
 </head>
 <body class="body">
-    <?php require('HeaderUsersEmpresa.php');?>
+    <?php require('HeaderUsersEmpresa.php');
+        $formato = substr($CarpturarEmpresa['RUT_EMPRESA'],0,2).".".substr($CarpturarEmpresa['RUT_EMPRESA'],2,3).".".substr($CarpturarEmpresa['RUT_EMPRESA'],5,3)."-".substr($CarpturarEmpresa['RUT_EMPRESA'],8,9);
+    ?>
 
     <div class="container fondoRegistros"><br/>
         <div class="form-row">
@@ -32,7 +34,7 @@
                     </div>
                     <div class="form-row">        
                         <label for="rut">RUT</label>
-                        <input type="text" name="rut" id="rut" value="<?= $CarpturarEmpresa['RUT_EMPRESA'] ?>" class="form-control" required="true" minlength="9" maxlength="9" disabled>
+                        <input type="text" name="rut" id="rut" value="<?= $formato ?>" class="form-control" required="true" minlength="9" maxlength="9" disabled>
                     </div>
                     <div class="form-row">
                         <label for="nombre">NOMBRE</label>

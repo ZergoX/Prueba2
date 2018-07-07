@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Listado de Contactos</title>
+    <title>Listado de Muestras</title>
     <style>
         .fondoAnalisis
         {
@@ -20,30 +20,34 @@
     </style>
 </head>
 <body class="body">
-<?php require("HeaderUsersEmpresa.php")?><br/>
+<?php require("HeaderReceptorMuestras.php")?><br/>
 
 <div class="container table-responsive fondoAnalisis"><br/>
-    <table class="table table-striped table-bordered" border="1" id="ListadoContactos">
+    <table class="table table-striped table-bordered" border="1" id="listadoAnalisis">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">RUT</th>
-                <th scope="col">NOMBRE</th>
-                <th scope="col">CORREO</th>
-                <th scope="col">TELEFONO</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
+                <th scope="col">Codigo Muestra</th>
+                <th scope="col">Tipo de analisis</th>
+                <th scope="col">Codigo de empresa</th>
+                <th scope="col">Codigo particular</th>
+                <th scope="col">Rut del empleado</th>
+                <th scope="col">Fecha de recepción</th>
+                <th scope="col">Temperatura</th>
+                <th scope="col">Cantidad de muestras</th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($LoadContactos as $key => $i) {
-                $formato = substr($i['RUT_CONTACTO'],0,2).".".substr($i['RUT_CONTACTO'],2,3).".".substr($i['RUT_CONTACTO'],5,3)."-".substr($i['RUT_CONTACTO'],8,9); ?>
+            <?php foreach ($listado_muestras as $key => $i) {
+                $formato = substr($i['RUT_EMPLEADO_RECIBE'],0,2).".".substr($i['RUT_EMPLEADO_RECIBE'],2,3).".".substr($i['RUT_EMPLEADO_RECIBE'],5,3)."-".substr($i['RUT_EMPLEADO_RECIBE'],8,9);?>
             <tr>
+                <th><?= $i['ID_ANALISIS_MUESTRAS']?></th>
+                <th><?= $i['Tipo_analisis']?></th>
+                <th><?= $i['EMPRESA_CODIGO_EMPRESA']?></th>
+                <th><?= $i['PARTICULAR_CODIGO_PARTICULAR']?></th>
                 <th><?= $formato?></th>
-                <th><?= $i['NOMBRE_CONTACTO']?></th>
-                <th><?= $i['EMAIL_CONTACTO']?></th>
-                <th><?= $i['TELEFONO_CONTACTO']?></th>
-                <th><a href="<?= base_url() ."index.php/CRUD_CONTACTOS/DeleteContacto/". $i['RUT_CONTACTO']?>"><input type="submit" value="Eliminar" class="btn btn-outline-danger"></a></th>
-                <th><a href="<?= base_url() ."index.php/CRUD_CONTACTOS/LoadContacto/". $i['RUT_CONTACTO']?>"><input type="submit" value="Actualizar" class="btn btn-outline-info"></a></th>
+                <th><?= $i['FECHA_RECEPCION']?></th>
+                <th><?= $i['TEMPERATURA_MUESTRA']?></th>
+                <th><?= $i['CANTIDAD_MUESTRA']?></th>
             </tr>
             <?php } ?>
         </tbody>
@@ -54,7 +58,7 @@
 
     <script>
         $(document).ready(function() {
-            $('#ListadoContactos').DataTable
+            $('#listadoAnalisis').DataTable
             ({
                 responsive: true,
 

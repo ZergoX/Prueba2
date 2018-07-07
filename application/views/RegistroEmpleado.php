@@ -55,10 +55,6 @@
                         <input type="password" name="pass2" id="pass2" class="form-control" placeholder="debe ser identica a la anterior" required="true" maxlength="50" minlength="6">
                     </div>
                     <div class="form-row">
-                        <label for="correo">Correo Electronio</label>
-                        <input type="email" name="correo" id="correo" value="<?= $this->session->MantenerDatosEmpleado['correo']?>" class="form-control" placeholder="ejemplo@gmail.com" required="true" maxlength="50" minlength="5">
-                    </div>
-                    <div class="form-row">
                         <label for="rol">Cargo/Rol</label>
                         <select name="rol" id="rol" class="form-control">
                             <option value="0">Seleccione</option>
