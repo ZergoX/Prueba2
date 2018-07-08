@@ -53,10 +53,14 @@ class CRUD_RESULTADO_ANALISIS extends CI_Controller {
 
 		$mensaje=['1'=>$error1];
 
+		$nombre =$this->ANALISIS_MUESTRAS_MODEL->getNameByCodigo($this->session->codigo_analisis);
+		$nombre = $nombre[0];
+
 		if(empty($mensaje['1']))
 		{
 			$resultado=
 			[
+				"ID_TIPO_ANALISIS" => $nombre['Tipo_analisis'],
 				"ID_ANALISIS_MUESTRAS" =>$this->session->codigo_analisis,
 				"FECHA_REGISTRO" => $fecha,
 				"PPM" => $ppm,
@@ -92,8 +96,6 @@ class CRUD_RESULTADO_ANALISIS extends CI_Controller {
 		$this->load->model('RESULTADO_ANALISIS_MODEL');
 
 		$data['listaAnalisisResultado'] = $this->RESULTADO_ANALISIS_MODEL->All('FINALIZADA',$this->session->rut);
-		var_dump($this->session->rut) ;
-		var_dump($data);
-		//$this->load->view('ListadoTodoResultado',$data);
+		$this->load->view('ListadoTodoResultado',$data);
 	}
 }

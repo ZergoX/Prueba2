@@ -21,6 +21,12 @@ class analisis_muestras_model extends CI_Model {
         return $this->db->get('analisis_muestras')->result_array();
     }
 
+    public function getNameByCodigo($codigo)
+    {
+        $this->db->where('ID_ANALISIS_MUESTRAS',$codigo);
+        return $this->db->get('analisis_muestras')->result_array();
+    }
+    
     public function All($rut)
     {
         $this->db->where('RUT_EMPLEADO_RECIBE',$rut);

@@ -119,4 +119,32 @@ class VALIDATE_FORM_PARTICULAR
 			return "El largo del segundo numero telefonico debe ser de 8 digitos";
 		}
     }
+
+    
+    public function ValidateLargepaterno($value,$min,$max)
+    {
+        $value2 = strlen($value);
+
+		if($value2 <$max && $value2>$min)
+		{
+			return "";
+		}else 
+		{	
+			return "El apellido no puede estar vacio ";
+		}
+    }
+
+    
+    public function ValidateLargematerno($value,$min,$max)
+    {
+        $value2 = strlen($value);
+
+		if($value2 <$max && $value2>$min)
+		{
+			return "";
+		}else 
+		{	
+			return "El apellido materno no puede estar vacio ";
+		}
+    }
 }

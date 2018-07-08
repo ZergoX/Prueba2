@@ -26,7 +26,8 @@ class resultado_analisis_model extends CI_Model {
         from('analisis_muestras a')->
         join('resultado_analisis re','a.ID_ANALISIS_MUESTRAS = re.ID_ANALISIS_MUESTRAS')->
         where('a.ESTADO_MUESTRA',$tipo)->
-        where('re.RUT_EMPLEADO_ANALISTA',$rut);
+        where('re.RUT_EMPLEADO_ANALISTA',$rut)->
+        group_by('a.ID_ANALISIS_MUESTRAS');
         return $this->db->get('resultado_analisis')->result_array();
     }
 
