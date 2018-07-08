@@ -118,6 +118,32 @@ class CRUD_EMPLEADO extends CI_Controller {
         $this->load->view('ListadoEmpleados',$data);
     }
     
+       public function PerfilReceptor(){
+
+        $this->load->model('EMPLEADO_MODEL');
+		
+		$Empleado = $this->EMPLEADO_MODEL->GetRut($this->session->rut);
+		//$codigoUsuario = $codigoUsuario[0];
+
+		//$data['Perfil_empleado'] = $this->EMPLEADO_MODEL->GetAllPhone($codigoUsuario['CODIGO_PARTICULAR']);
+        $data['Perfil_empleado'] = $Empleado;
+        $data['Perfil_empleado']=$data['Perfil_empleado'][0];
+        //var_dump($data);
+	    $this->load->view('PerfilReceptor',$data);
+
+       }
+
+       public function LoadUpdateEmpleado($rut){
+
+        $this->load->model('EMPLEADO_MODEL');
+
+        $datos['cargarDatos'] = $this->EMPLEADO_MODEL->GetByRut($rut);
+
+		$datos['cargarDatos'] = $datos['cargarDatos'][0];
+
+		$this->load->view('UpdateEmpleado',$datos);
+       }
+
     public function HabilitarEmpleado($rut)
     {
         $this->load->model('EMPLEADO_MODEL');
@@ -165,5 +191,98 @@ class CRUD_EMPLEADO extends CI_Controller {
 
         redirect('CRUD_EMPLEADO/ListEmpleados',"refresh");
     }   
+
+    public function EditEmpleado($rut)
+	{
+		$this->load->model('EMPLEADO_MODEL');
+
+		$this->load->library('VALIDATE_FORM_PARTICULAR');
+
+		$nombre = $this->input->post('nombre');
+
+		$nombre1 = trim($nombre);
+
+		$error1 = $this->validate_form_particular->ValidateLargeNombre($nombre1,2,50);
+
+        
+
+		$mensaje =['1' => $error1];
+        if(empty($mensaje['1']))
+		{
+			$empleado=
+			[
+				"NOMBRE_EMPLEADO" => $nombre1,
+
+			];
+            
+			$this->EMPLEADO_MODEL->Update($rut,$empleado);
+			redirect('/CRUD_EMPLEADO/PerfilReceptor','refresh');
+		}else 
+		{
+			$this->session->set_userdata('mensaje_error_update_particular',$mensaje);
+			redirect('/CRUD_EMPLEADO/LoadUpdateEmpleado/'.$rut,'refresh');
+		}
+    }
+    public function CambiarPassReceptor()
+	{
+		$this->load->model('EMPLEADO_MODEL');
+
+		$this->load->library('VALIDATE_LOGIN');
+
+		$oldPass = hash('sha256',$this->input->post('oldpass'));
+		$newPass = hash('sha256',$this->input->post('newPass'));
+		$repeatPass = hash('sha256',$this->input->post('repeatNewPass'));
+
+		$oldPass1 = trim($oldPass);
+		$newPass1 = trim($newPass);
+		$repeatPass1 = trim($repeatPass);
+
+		$error1=$this->validate_login->ValidateLargepass($oldPass1);
+		$error2=$this->validate_login->ValidateLargepass($newPass1);
+		$error3=$this->validate_login->ValidateLargepass($repeatPass1);
+
+		$mensaje=['1' => $error1,'2'=>$error2,'3'=>$error3];
+
+		if(empty($mensaje['1']) && empty($error2['1']) && empty($error3['3']))
+		{
+			$passOld= $this->EMPLEADO_MODEL->GetRut($this->session->rut);
+			$passOld = $passOld[0];
+
+			if($passOld['PASSWORD_EMPLEADO'] == $oldPass1)
+			{
+				if($newPass1 == $repeatPass1)
+				{
+					$cambiarPass=
+					[
+						"PASSWORD_EMPLEADO"=> $repeatPass1
+					];
+
+					$exito =$this->EMPLEADO_MODEL->Update($passOld['RUT_EMPLEADO'],$cambiarPass);
+
+					if($exito)
+					{
+						$mensaje="Contraseña cambiada correctamente";
+					}
+
+					$this->session->set_userdata('mensaje_pass',$mensaje);
+					redirect('/CRUD_EMPLEADO/PerfilReceptor','refresh');
+				}else 
+				{
+					$mensaje="la nueva contraseña no coinciden";
+					$this->session->set_userdata('mensaje_pass',$mensaje);
+					redirect('/CRUD_EMPLEADO/PerfilReceptor','refresh');
+				}
+			}else 
+			{
+				$mensaje ="La contraseña actual ingresada no es correcta";
+				$this->session->set_userdata('mensaje_pass',$mensaje);
+				redirect('/CRUD_EMPLEADO/PerfilReceptor','refresh');
+			}
+		}else 
+		{
+			$this->session->set_userdata('mensaje_pass',$mensaje);
+			redirect('/CRUD_EMPLEADO/PerfilReceptor','refresh');
+		}
+	}
 }
 
