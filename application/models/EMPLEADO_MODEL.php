@@ -14,8 +14,20 @@ class empleado_model extends CI_Model {
         return $this->db->insert("empleado",$empleado);
     }
 
+    public function Update($rut,$empleado)
+    {
+        $this->db->where("RUT_EMPLEADO",$rut);
+        return $this->db->update("empleado",$empleado);
+    }
+
     public function All()
     {
+        return $this->db->get('empleado')->result_array();
+    }
+
+    public function GetByRut($rut)
+    {
+        $this->db->where('RUT_EMPLEADO',$rut);
         return $this->db->get('empleado')->result_array();
     }
 

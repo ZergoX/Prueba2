@@ -111,6 +111,33 @@ class CRUD_MUESTRAS extends CI_Controller {
 		}	
 	}
 
+	public function Empresa(){
+
+		$this->load->model('EMPRESA_MODEL');
+		$this->load->model('TIPO_ANALISIS_MODEL');
+
+		$codigo = $this->input->post('buscar');
+
+		$codigo1 = trim($codigo);
+
+		//var_dump($codigo1);
+
+		$encontroEmpresas['datos_Empresas']=$this->EMPRESA_MODEL->GetById($codigo1);
+		$encontroEmpresas['listado_analisis'] = $this->TIPO_ANALISIS_MODEL->All();
+
+		if(count($encontroEmpresas))
+		{
+			$this->session->set_userdata('codigo_Empresas',$codigo1);
+			$this->load->view('RegistoMuestraEmpresa',$encontroEmpresas);
+		}else 
+		{
+			$mensaje ="No se encontro el usuario buscado";
+			$this->session->set_userdata('mensaje_busqueda',$mensaje);
+			redirect('/CRUD_MUESTRAS/Empresa','refresh');
+		}
+
+	}
+
 	public function AllMuestras()
 	{
 		$this->load->model('ANALISIS_MUESTRAS_MODEL');
