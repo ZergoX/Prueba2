@@ -30,15 +30,17 @@
                     <th scope="col">Rut responsable</th>
                     <th scope="col">Fecha del resultado</th>
                     <th scope="col">Estado</th>
-                    <th scope="col">PMM</th>
+                    <th scope="col">PPM</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($listaAnalisisResultado as $key => $i) { ?>                
                 <tr>
                     <th><?= $i['ID_ANALISIS_MUESTRAS']?></th>
-                    <th><?= $i['NUMERO_TELEFONO']?></th>
-                    <th></th>
+                    <th><?= $i['RUT_EMPLEADO_ANALISTA']?></th>
+                    <th><?= $i['FECHA_REGISTRO']?></th>
+                    <th><?= $i['ESTADO_MUESTRA']?></th>
+                    <th><?= $i['PPM']?></th>
                 </tr>
                 <?php } ?>
             </tbody>
