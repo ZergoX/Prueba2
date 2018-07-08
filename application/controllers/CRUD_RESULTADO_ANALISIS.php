@@ -93,14 +93,43 @@ class CRUD_RESULTADO_ANALISIS extends CI_Controller {
 		}
 	}
 
-	public function ResultadosByCodigo($codigo){
-
+	public function ResultadosByCodigo(){
+		
+		$codigo=$_GET['codigo'];
+	    //var_dump($codigo);
 		$this->load->model('RESULTADO_ANALISIS_MODEL');
 		
-		$resultado['Resultados']=$this->RESULTADOS_ANALISIS_MODEL->GetByCodigo($codigo);
-
+		$resultado['Resultados']=$this->RESULTADO_ANALISIS_MODEL->GetByCodigo($codigo);
+ 
+		$resultado['Resultados']=$resultado['Resultados'][0];
+		 
         $this->load->view('ResultadoMuestras',$resultado);
 
+	}
+
+	public function loadResultadoCLiente(){
+
+		$this->load->model('RESULTADO_ANALISIS_MODEL');
+		$this->load->model('PARTICULAR_MODEL');
+		$this->load->model('EMPRESA_MODEL');
+		
+		$Particular=$this->PARTICULAR_MODEL->GetRut($this->session->rut);
+		$Empresa=$this->EMPRESA_MODEL->GetRut($this->session->rut);
+		
+		
+
+		if(count($Particular)!=0){
+		$codigo=$Particular[0]['CODIGO_PARTICULAR'];
+		//var_dump($codigo);
+	    $data['listaAnalisisResultado'] = $this->RESULTADO_ANALISIS_MODEL->AllByParticular('FINALIZADA',$codigo);
+		}
+		else{
+	     $codigo=$Empresa[0]['CODIGO_EMPRESA'];
+		 $data['listaAnalisisResultado'] = $this->RESULTADO_ANALISIS_MODEL->AllByEmpresa('FINALIZADA',$codigo);
+       	}
+	
+		$this->load->view('ListadoClienteResultado',$data);
+		
 	}
 
 	public function loadAllReusultadoAnalisis()
@@ -108,8 +137,12 @@ class CRUD_RESULTADO_ANALISIS extends CI_Controller {
 		$this->load->model('RESULTADO_ANALISIS_MODEL');
 
 		$data['listaAnalisisResultado'] = $this->RESULTADO_ANALISIS_MODEL->All('FINALIZADA',$this->session->rut);
+<<<<<<< HEAD
 		//var_dump($this->session->rut);
 		//var_dump($data);
+=======
+	
+>>>>>>> 4e9347d97e836903b3d1c606a576a85a8b1c1ead
 		$this->load->view('ListadoTodoResultado',$data);
 	}
 }

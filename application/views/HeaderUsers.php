@@ -19,7 +19,7 @@
                 <a class="nav-link" href="<?= base_url()?>index.php/CRUD_TELEFONO/">Agregar Numero telefonico</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?= base_url()?>index.php/CRUD_RESULTADO_ANALISIS/loadAllReusultadoAnalisis">Mis muestras de analisis</a>
+                <a class="nav-link" href="<?= base_url()?>index.php/CRUD_RESULTADO_ANALISIS/loadResultadoCliente">Mis muestras de analisis</a>
             </li>        
         </ul>
         <form class="form-inline my-2 my-lg-0">

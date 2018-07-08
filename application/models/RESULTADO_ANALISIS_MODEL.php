@@ -20,6 +20,26 @@ class resultado_analisis_model extends CI_Model {
         return $this->db->get('analisis_muestras')->result_array();
     }
 
+    public function AllByParticular($tipo,$codigo){
+        $this->db->select('a.ESTADO_MUESTRA, a.ID_ANALISIS_MUESTRAS, re.FECHA_REGISTRO,re.PPM,re.RUT_EMPLEADO_ANALISTA')->
+        from('analisis_muestras a')->
+        join('resultado_analisis re','a.ID_ANALISIS_MUESTRAS = re.ID_ANALISIS_MUESTRAS')->
+        where('a.ESTADO_MUESTRA',$tipo)->
+        where('a.PARTICULAR_CODIGO_PARTICULAR',$codigo)->
+        group_by('a.ID_ANALISIS_MUESTRAS');
+        return $this->db->get('resultado_analisis')->result_array();
+    }
+
+    public function AllByEmpresa($tipo,$codigo){
+        $this->db->select('a.ESTADO_MUESTRA, a.ID_ANALISIS_MUESTRAS, re.FECHA_REGISTRO,re.PPM,re.RUT_EMPLEADO_ANALISTA')->
+        from('analisis_muestras a')->
+        join('resultado_analisis re','a.ID_ANALISIS_MUESTRAS = re.ID_ANALISIS_MUESTRAS')->
+        where('a.ESTADO_MUESTRA',$tipo)->
+        where('a.EMPRESA_CODIGO_EMPRESA',$codigo)->
+        group_by('a.ID_ANALISIS_MUESTRAS');
+        return $this->db->get('resultado_analisis')->result_array();
+    }
+
     public function All($tipo,$rut)
     {   
         $this->db->select('a.ESTADO_MUESTRA, a.ID_ANALISIS_MUESTRAS, re.FECHA_REGISTRO,re.PPM,re.RUT_EMPLEADO_ANALISTA')->
