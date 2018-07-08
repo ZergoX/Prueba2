@@ -137,12 +137,8 @@ class CRUD_RESULTADO_ANALISIS extends CI_Controller {
 		$this->load->model('RESULTADO_ANALISIS_MODEL');
 
 		$data['listaAnalisisResultado'] = $this->RESULTADO_ANALISIS_MODEL->All('FINALIZADA',$this->session->rut);
-<<<<<<< HEAD
 		//var_dump($this->session->rut);
 		//var_dump($data);
-=======
-	
->>>>>>> 4e9347d97e836903b3d1c606a576a85a8b1c1ead
 		$this->load->view('ListadoTodoResultado',$data);
 	}
 }
