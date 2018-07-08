@@ -8,9 +8,8 @@
 
     <title>Resultado Muestras</title>
 </head>
-<body>
-
-  <?php
+<body class="body"> 
+<?php
     $this->load->model('PARTICULAR_MODEL');
 
     if(count($this->PARTICULAR_MODEL->GetRut($this->session->rut))!=0){
@@ -20,6 +19,7 @@
       require('HeaderUsersEmpresa.php');
     }
   ?>
+    
 
   <div class="container-fluid"> 
     <canvas id="resultados" width="600" heigth="400"></canvas>
