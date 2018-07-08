@@ -18,6 +18,7 @@ class CRUD_PARTICULAR extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
+
 	public function index()
 	{
 		$this->load->view('RegistroParticular');
@@ -191,9 +192,10 @@ class CRUD_PARTICULAR extends CI_Controller {
 		
 		$codigoUsuario = $this->PARTICULAR_MODEL->GetRut($this->session->rut);
 		$codigoUsuario = $codigoUsuario[0];
-
+		
 		$data['Perfil_particular'] = $this->PARTICULAR_MODEL->GetAllPhone($codigoUsuario['CODIGO_PARTICULAR']);
 		$data['Perfil_particular'] = $data['Perfil_particular'][0];
+		
 		$this->load->view('PerfilParticular',$data);
 	}
 

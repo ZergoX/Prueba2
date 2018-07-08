@@ -45,6 +45,18 @@ class analisis_muestras_model extends CI_Model {
         return $this->db->get('analisis_muestras')->result_array();
     }
 
+    public function AllAnalisisEmpresa($estado)
+    {
+        //SELECT * FROM particular P JOIN analisis_muestras A ON (A.PARTICULAR_CODIGO_PARTICULAR = P.CODIGO_PARTICULAR) where a.ESTADO_MUESTRA like 'PROCESAR';
+
+        $this->db->select('a.ID_ANALISIS_MUESTRAS,a.FECHA_RECEPCION,a.PARTICULAR_CODIGO_PARTICULAR,a.EMPRESA_CODIGO_EMPRESA,a.RUT_EMPLEADO_RECIBE,a.TIPO_ANALISIS,a.ESTADO_MUESTRA,p.RUT_PARTICULAR')->
+        from('analisis_muestras a')->
+        join('particular p','a.PARTICULAR_CODIGO_PARTICULAR = p.CODIGO_PARTICULAR')->
+        where('a.ESTADO_MUESTRA',$estado)->
+        group_by('a.ID_ANALISIS_MUESTRAS');
+        return $this->db->get('analisis_muestras')->result_array();
+    }
+
     public function update($codigo,$analisis)
     {
         $this->db->where('ID_ANALISIS_MUESTRAS',$codigo);

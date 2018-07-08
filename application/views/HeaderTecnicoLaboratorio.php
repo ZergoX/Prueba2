@@ -15,15 +15,8 @@
             <li class="nav-item active">
                 <a class="nav-link" href="<?= base_url()?>index.php/CRUD_EMPLEADO/PerfilTecnicoAnalista">Mi Perfil <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Listado de muestras
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="<?= base_url() ?>index.php/CRUD_RESULTADO_ANALISIS">Particulares</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Empresas</a>                
-                </div>
+            <li>
+                <a class="nav-link" href="<?= base_url() ?>index.php/CRUD_RESULTADO_ANALISIS">Listado de muestras <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<?= base_url()?>index.php/CRUD_RESULTADO_ANALISIS/loadAllReusultadoAnalisis">Analisis finalizados</a>

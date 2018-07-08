@@ -9,9 +9,8 @@ class telefono_model extends CI_Model {
         $this->load->database();                   
     } 
 
-    public function Add($codigo,$telefono)
+    public function Add($telefono)
     {
-        $this->db->where('PARTICULAR_CODIGO_PARTICULAR',$codigo);
         return $this->db->insert("telefono",$telefono);
     }
 

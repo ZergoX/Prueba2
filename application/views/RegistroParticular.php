@@ -26,6 +26,7 @@
     <div class="container fondoRegistros" id="limpiarformulario">
         <div class="row">
             <div class="col-md-6">
+                
             </div>
             <div class="col-md-6">
                 <form action="<?= base_url()?>/index.php/CRUD_PARTICULAR/AddParticular" method="post" id="formularioCliente">

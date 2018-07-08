@@ -26,32 +26,64 @@ class Welcome extends CI_Controller {
 	
 	public function AccessAdmin()
 	{
-		$this->load->view('HeaderAdmin');
-		$this->load->view('Main');	
+		if($this->session->rut != null)
+		{
+			$this->load->view('HeaderAdmin');
+			$this->load->view('Main');	
+		}else
+		{
+			redirect('/Welcome','refresh');		
+		}
 	}
 
 	public function AccessReceptorMuetras()
 	{
-		$this->load->view('HeaderReceptorMuestras');
-		$this->load->view('Main');	
+		if($this->session->rut != null)
+		{
+			$this->load->view('HeaderReceptorMuestras');
+			$this->load->view('Main');	
+		}else 
+		{
+			redirect('/Welcome','refresh');		
+		}
 	}
 
 	public function AccessTecnicoLaboratorio()
 	{
-		$this->load->view('HeaderTecnicoLaboratorio');
-		$this->load->view('Main');
+		if($this->session->rut != null)
+		{
+			$this->load->view('HeaderTecnicoLaboratorio');
+			$this->load->view('Main');
+		}else 
+		{
+			redirect('/Welcome','refresh');
+		}
 	}
 
 	public function AccessUsers()
 	{
-		$this->load->view('HeaderUsers');
-		$this->load->view('Main');	
+		if($this->session->rut !=null)
+		{
+			$this->load->view('HeaderUsers');
+			$this->load->view('Main');	
+		}else 
+		{
+			redirect('/Welcome','refresh');
+		}
+
 	}
 
 	public function AccessUsersEmpresa()
 	{
-		$this->load->view('HeaderUsersEmpresa');
-		$this->load->view('Main');	
+		if($this->session->rut != null)
+		{
+			
+			$this->load->view('HeaderUsersEmpresa');
+			$this->load->view('Main');	
+		}else 
+		{
+			redirect('/Welcome','refresh');
+		}
 	}
 
 	public function Login()
@@ -74,8 +106,8 @@ class Welcome extends CI_Controller {
 
 		$mensaje = ["1"=> $error1,"2"=>$error2,"3"=>$error3];
 
-		if(empty($mensaje['1']) && empty($error2['2']) && empty($mensaje['3']))
-		{	
+		/*if(empty($mensaje['1']) && empty($error2['2']) && empty($mensaje['3']))
+		{*/	
 			$loginParticular = $this->PARTICULAR_MODEL->GetRutAndPass($rut1,$pass1);
 			$loginEmpresa = $this->EMPRESA_MODEL->GetRutAndPass($rut1,$pass1);
 			$loginEmpleado = $this->EMPLEADO_MODEL->GetRutAndPass($rut1,$pass1);
@@ -177,15 +209,15 @@ class Welcome extends CI_Controller {
 				}
 			}else 
 			{
-				$mensaje ="Credenciales incorrectas";
+				$mensaje ="Credenciales incorrectas ";
 				$this->session->set_userdata('MensajeErrorLogin',$mensaje);
 				redirect('/Welcome','refresh');		
 			}
-		}else 
+		/*}else 
 		{
 			$this->session->set_userdata('MensajeErrorLogin',$mensaje);
 			redirect('/Welcome','refresh');
-		}
+		}*/
 	}
 
 	public function Logout()
