@@ -36,6 +36,12 @@ class Welcome extends CI_Controller {
 		$this->load->view('Main');	
 	}
 
+	public function AccessTecnicoLaboratorio()
+	{
+		$this->load->view('HeaderTecnicoLaboratorio');
+		$this->load->view('Main');
+	}
+
 	public function AccessUsers()
 	{
 		$this->load->view('HeaderUsers');
@@ -112,6 +118,7 @@ class Welcome extends CI_Controller {
 			{
 				$tipoEmpleado = $this->EMPLEADO_MODEL->TypeRol($rut,'A');
 				$tipoEmpleadoReceptor = $this->EMPLEADO_MODEL->TypeRol($rut,'R');
+				$tipoEmpleadoTecnicoAnalista = $this->EMPLEADO_MODEL->TypeRol($rut,'T');
 				$estaHabilidatoEmpleado = $this->EMPLEADO_MODEL->GetStatusAccount($rut1,'ACTIVO');
 				
 				if(count($tipoEmpleado) !=0)
@@ -139,6 +146,22 @@ class Welcome extends CI_Controller {
 						$this->session->set_userdata('rut',$rut1);
 						$this->session->set_userdata('usuario',$NombreUsuario);
 						redirect('/Welcome/AccessReceptorMuetras','refresh');
+					}else 
+					{
+						$mensaje="Su cuenta se encuentra deshabilitada";
+						$this->session->set_userdata('MensajeErrorLogin',$mensaje);
+						
+						redirect('/Welcome','refresh');		
+					}
+				}else if(count($tipoEmpleadoTecnicoAnalista) != 0)
+				{
+					if(count($estaHabilidatoEmpleado) !=0)
+					{
+						$rr = $estaHabilidatoEmpleado[0];
+						$NombreUsuario = $rr['NOMBRE_EMPLEADO'] . " " .$rr['APELLIDO_PATERNO_EMPLEADO']. " ". $rr['APELLIDO_MATERNO_EMPLEADO'];
+						$this->session->set_userdata('rut',$rut1);
+						$this->session->set_userdata('usuario',$NombreUsuario);
+						redirect('/Welcome/AccessTecnicoLaboratorio','refresh');
 					}else 
 					{
 						$mensaje="Su cuenta se encuentra deshabilitada";

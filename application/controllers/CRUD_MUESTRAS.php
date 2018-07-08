@@ -77,7 +77,8 @@ class CRUD_MUESTRAS extends CI_Controller {
 						"PARTICULAR_CODIGO_PARTICULAR" => $this->session->codigo_particular,
 						"EMPRESA_CODIGO_EMPRESA" => null,
 						"RUT_EMPLEADO_RECIBE" => $this->session->rut,
-						"tipo_analisis" => $analisis
+						"tipo_analisis" => $analisis,
+						"ESTADO_MUESTRA"=>"PROCESAR"
 					];
 
 					$exito = $this->ANALISIS_MUESTRAS_MODEL->Add($muestra);
@@ -115,7 +116,7 @@ class CRUD_MUESTRAS extends CI_Controller {
 	{
 		$this->load->model('ANALISIS_MUESTRAS_MODEL');
 
-		$data['listado_muestras'] = $this->ANALISIS_MUESTRAS_MODEL->All();
+		$data['listado_muestras'] = $this->ANALISIS_MUESTRAS_MODEL->All($this->session->rut);
 
 		$this->load->view('ListadoMuestrasParticular',$data);
 	}
