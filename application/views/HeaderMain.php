@@ -43,3 +43,12 @@
         </div>
     </div>
 </header>
+<?php if($this->session->MensajeErrorLogin != null){ ?>
+                    <div class="alert alert-danger" role="alert">
+                        <ul class="navbar-nav">
+                            
+                                <?= $this->session->MensajeErrorLogin?>
+                                <?= $this->session->set_userdata("MensajeErrorLogin",null)?> 
+                        </ul>
+                    </div>
+                <?php } ?>
