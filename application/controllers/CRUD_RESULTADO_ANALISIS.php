@@ -87,13 +87,23 @@ class CRUD_RESULTADO_ANALISIS extends CI_Controller {
 		}
 	}
 
+	public function ResultadosByCodigo($codigo){
+
+		$this->load->model('RESULTADO_ANALISIS_MODEL');
+		
+		$resultado['Resultados']=$this->RESULTADOS_ANALISIS_MODEL->GetByCodigo($codigo);
+
+        $this->load->view('ResultadoMuestras',$resultado);
+
+	}
+
 	public function loadAllReusultadoAnalisis()
 	{
 		$this->load->model('RESULTADO_ANALISIS_MODEL');
 
 		$data['listaAnalisisResultado'] = $this->RESULTADO_ANALISIS_MODEL->All('FINALIZADA',$this->session->rut);
-		var_dump($this->session->rut) ;
-		var_dump($data);
+		//var_dump($this->session->rut) ;
+		//var_dump($data);
 		$this->load->view('ListadoTodoResultado',$data);
 	}
 }

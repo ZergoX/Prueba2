@@ -10,6 +10,17 @@
 </head>
 <body>
 
+  <?php
+    $this->load->model('PARTICULAR_MODEL');
+
+    if(count($this->PARTICULAR_MODEL->GetRut($this->session->rut))!=0){
+     require('HeaderUsers.php');
+    }else{
+
+      require('HeaderUsersEmpresa.php');
+    }
+  ?>
+
   <div class="container-fluid"> 
     <canvas id="resultados" width="600" heigth="400"></canvas>
   </div>
