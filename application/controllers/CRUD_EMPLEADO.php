@@ -180,7 +180,7 @@ class CRUD_EMPLEADO extends CI_Controller {
             "RUT_EMPLEADO" => $data['DatosEmpleado']['RUT_EMPLEADO'],
             "NOMBRE_EMPLEADO" => $data['DatosEmpleado']['NOMBRE_EMPLEADO'],
             "PASSWORD_EMPLEADO" => $data['DatosEmpleado']['PASSWORD_EMPLEADO'],
-            "ESTADO_EMPLEADO" => "ACTIVO",
+            "ESTADO_EMPLEADO" => "DESHABILITADO",
             "ROL" =>$data['DatosEmpleado']['ROL'],
             "APELLIDO_PATERNO_EMPLEADO" =>$data['DatosEmpleado']['APELLIDO_PATERNO_EMPLEADO'],
             "APELLIDO_MATERNO_EMPLEADO" => $data['DatosEmpleado']['APELLIDO_MATERNO_EMPLEADO'],
